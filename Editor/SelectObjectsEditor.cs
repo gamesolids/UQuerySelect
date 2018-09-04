@@ -16,6 +16,8 @@ namespace gamesolids
         string[] nMenu = new string[2] { "is", "contains" };
         int nChoice = 0;
 
+        public UnityEditor.SerializedProperty replaceWith;
+
         private GameObject lastObj;
         private static SelectObjectsEditor window;
         // Add menu named "My Window" to the Window menu
@@ -223,6 +225,23 @@ namespace gamesolids
                 {
                     SelectObjects.GetDistanceObjectsInScene(selectedLayers.ToArray(), selectedTags.ToArray(), selectedChilds.ToArray());
                     SceneView.lastActiveSceneView.Repaint();
+                }
+                GUILayout.EndHorizontal();
+
+                // end region
+
+                // region replace with prefab
+
+                GUILayout.Space(8f);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Replace with", GUILayout.Width(labelFixedWidth));
+
+                SelectObjects.replaceWith = (UnityEngine.GameObject) EditorGUILayout.ObjectField(SelectObjects.replaceWith,typeof(GameObject),false);
+
+                if (GUILayout.Button("Replace", GUILayout.Width(buttonFixedWidth)))
+                {
+                    SelectObjects.ReplaceSelection();
+                    Debug.Log("Items have been replaced.");
                 }
                 GUILayout.EndHorizontal();
 

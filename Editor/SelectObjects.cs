@@ -15,6 +15,8 @@ namespace gamesolids
         public static float selectedVector;
         public static float selectedDistance;
 
+        public static GameObject replaceWith;
+
 
         /// <summary>
         /// Gets list of all Object Types associated with active object.
@@ -323,6 +325,35 @@ namespace gamesolids
             Selection.objects = objectsInScene.ToArray();
             SceneView.lastActiveSceneView.Repaint();
             return Selection.objects as GameObject[];
+        }
+
+
+        public static void ReplaceSelection()
+        {
+
+            foreach(GameObject go in Selection.gameObjects)
+            {
+
+                GameObject obj;
+                if (replaceWith.scene.name != null)
+                {
+                    obj = GameObject.Instantiate(replaceWith, go.transform.position, go.transform.rotation);
+                }
+                else
+                {
+                    obj = PrefabUtility.InstantiatePrefab(replaceWith) as GameObject;
+                    obj.transform.position = go.transform.position;
+                    obj.transform.rotation = go.transform.rotation;
+                }
+                if (go.GetComponentInParent<Transform>().parent != null)
+                {
+                    obj.transform.parent = go.GetComponentInParent<Transform>().parent;
+                }
+                obj.transform.localScale = go.transform.localScale;
+                GameObject.DestroyImmediate(go);
+                
+            }
+
         }
     }
 }
