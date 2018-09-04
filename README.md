@@ -32,6 +32,9 @@ Only one at a time can be selected.
 - **Vector** - Maximum offset of Direction from the direction selected GameObject is facing
 - **Distance** - Good ol' radial distance from object
   
+### Replace
+Replaces the selected GameObjects with a prefab or another object in scene.
+
 
 ## Install
 1. Download the repository.
